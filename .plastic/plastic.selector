@@ -1,0 +1,4 @@
+repository "2D Beginner Adventure Tutorial/2D Beginner Adventure Tutorial@20067524131255@cloud"
+  path "/"
+    br "/main"
+    co "/main"
