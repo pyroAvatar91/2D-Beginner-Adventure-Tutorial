@@ -3,6 +3,8 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour {
     
     
+    Animator animator;
+    
     private Rigidbody2D rigidbody2d;
     [SerializeField] private float moveSpeed = 3.0f;
     [SerializeField] private bool vertical;
@@ -13,6 +15,9 @@ public class EnemyController : MonoBehaviour {
     [SerializeField] private bool isSlowLeft = true;
     [SerializeField] private int currentState = 0; // 0: horizontal, 1: vertical, 2: reverse vertical, 3: reverse horizontal
     [SerializeField] private float stateDuration = 2.0f;   
+    [SerializeField] private bool broken = true;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite[] frozenSprites;
 
     private float movingTimer;
     private float stateTimer;
@@ -30,9 +35,12 @@ public class EnemyController : MonoBehaviour {
         Vector2.up,     // 2: reverse vertical
         Vector2.left    // 3: reverse horizontal
     };
+
     
     
     private void Start() {
+        animator = GetComponent<Animator>();
+        
         rigidbody2d = GetComponent<Rigidbody2D>();
         
         movingTimer = timeMoving;
@@ -60,18 +68,27 @@ public class EnemyController : MonoBehaviour {
     
 
     private void FixedUpdate() {
+        if (!broken) { return; }
+        
         Vector2 position = rigidbody2d.position;
 
         if (isSlowVariant) {
             var directions = isSlowLeft ? MoveDirectionsLeft : MoveDirectionsRight;
             position += directions[currentState] * (moveSpeed * Time.deltaTime);
+            Vector2 currentDirection = directions[currentState];
+            animator.SetFloat("Move X", currentDirection.x);
+            animator.SetFloat("Move Y", currentDirection.y);
         }
         else {
             if (vertical) {
                 position.y = position.y + (direction * moveSpeed * Time.deltaTime);
+                animator.SetFloat("Move X", 0);
+                animator.SetFloat("Move Y", direction);
             }
             else {
                 position.x = position.x + (direction * moveSpeed * Time.deltaTime);
+                animator.SetFloat("Move X", direction);
+                animator.SetFloat("Move Y", 0);
             }
         }
         rigidbody2d.MovePosition(position);
@@ -82,6 +99,13 @@ public class EnemyController : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
         if (player != null) {player.ChangeHealth(removeHealth);}
+    }
+
+    public void Fix() {
+        broken = false;
+        rigidbody2d.simulated = false;
+        animator.enabled = false;
+        spriteRenderer.sprite = frozenSprites[Random.Range(0, frozenSprites.Length)];   
     }
     
 }

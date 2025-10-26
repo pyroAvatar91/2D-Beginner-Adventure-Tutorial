@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: 671105287650966680, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
       propertyPath: m_Size.y
-      value: 2.1364546
+      value: 2.2724218
       objectReference: {fileID: 0}
     - target: {fileID: 671105287650966680, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
@@ -26,18 +26,23 @@ PrefabInstance:
     - target: {fileID: 671105287650966680, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
       propertyPath: m_Offset.y
-      value: 0.065518856
+      value: 1.1422963
       objectReference: {fileID: 0}
     - target: {fileID: 671105287650966680, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 671105287650966680, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 2.33
       objectReference: {fileID: 0}
+    - target: {fileID: 2810564867059059876, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 795d270d0a8f1b443a3c773147c2ec86, type: 2}
     - target: {fileID: 4281160006770216490, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
       propertyPath: m_Name
@@ -69,15 +74,39 @@ PrefabInstance:
       propertyPath: stateDuration
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6677553454531305423, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: 'frozenSprites.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1866996182, guid: 10b06bb3bd03d764994ccec57c3d7d1e,
+        type: 3}
+    - target: {fileID: 6677553454531305423, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: 'frozenSprites.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1581615660, guid: 10b06bb3bd03d764994ccec57c3d7d1e,
+        type: 3}
+    - target: {fileID: 6677553454531305423, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: 'frozenSprites.Array.data[2]'
+      value: 
+      objectReference: {fileID: -2112457510, guid: 10b06bb3bd03d764994ccec57c3d7d1e,
+        type: 3}
+    - target: {fileID: 6677553454531305423, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: 'frozenSprites.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1484627788, guid: 10b06bb3bd03d764994ccec57c3d7d1e,
+        type: 3}
     - target: {fileID: 6988856192533651187, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.57
+      value: -1.835
       objectReference: {fileID: 0}
     - target: {fileID: 6988856192533651187, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.74
+      value: 14.757
       objectReference: {fileID: 0}
     - target: {fileID: 6988856192533651187, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
