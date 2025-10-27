@@ -38,6 +38,41 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 2.33
       objectReference: {fileID: 0}
+    - target: {fileID: 934024432333996838, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.131
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607067020877376194, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607067020877376194, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607067020877376194, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607067020877376194, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607067020877376194, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607067020877376194, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2810564867059059876, guid: 2c30e8f630674fe2c9912adb82f6e5c9,
         type: 3}
       propertyPath: m_Controller

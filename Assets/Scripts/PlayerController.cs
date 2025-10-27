@@ -1,89 +1,120 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour {
-    
-    
-    Animator animator;
-    private Vector2 moveDirection = new Vector2(1, 0);
+    private Animator animator;
+    private Vector2 moveDirection = new(1, 0);
+    public InputAction talkAction;
+    public static PlayerController Instance { get; private set; }
+
+    private AudioSource audioSource;
+    public AudioClip launchClip;
+    public AudioClip playerHitClip;
 
     private Rigidbody2D rigidbody2d;
     private Vector2 move;
-    [SerializeField] private InputAction MoveAction;
+
+    [FormerlySerializedAs("MoveAction")] [SerializeField]
+    private InputAction moveAction;
+
     [SerializeField] private float moveSpeed = 3.0f;
     [SerializeField] private int maxHealth = 5;
     [SerializeField] private float timeInvincible = 2.0f;
     [SerializeField] private GameObject projectilePrefab;
-    
+
     private int minHealth = 0;
     private int currentHealth;
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
-    
+
     private bool isInvincible;
     private float damageCooldown;
-    
-    
+
+
+    private void Awake() {
+        Instance = this;
+    }
     
     private void Start() {
+        audioSource = GetComponent<AudioSource>();
+
         animator = GetComponent<Animator>();
-        
-        MoveAction.Enable();
+
+        moveAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
-        
+        talkAction.Enable();
+
         currentHealth = maxHealth;
-        Debug.Log(currentHealth + "/" + maxHealth);        
+        Debug.Log(currentHealth + "/" + maxHealth);
     }
 
     private void Update() {
-        move = MoveAction.ReadValue<Vector2>();
-        
+        move = moveAction.ReadValue<Vector2>();
+
         if (!Mathf.Approximately(move.x, 0f) || !Mathf.Approximately(move.y, 0f)) {
             moveDirection.Set(move.x, move.y);
             moveDirection.Normalize();
         }
-        
+
         animator.SetFloat("Look X", moveDirection.x);
         animator.SetFloat("Look Y", moveDirection.y);
         animator.SetFloat("Speed", move.magnitude);
-        
+
+        if (Input.GetKeyDown(KeyCode.V)) FindFriend();
+
         if (isInvincible) {
             damageCooldown -= Time.deltaTime;
-            if (damageCooldown < 0) {
-                isInvincible = false;
-            }
+            if (damageCooldown < 0) isInvincible = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Launch();
-        }
-        
+        if (Input.GetKeyDown(KeyCode.Space)) Launch();
     }
 
     private void FixedUpdate() {
-        Vector2 position = (Vector2)rigidbody2d.position + move * (moveSpeed * Time.deltaTime);
+        var position = (Vector2)rigidbody2d.position + move * (moveSpeed * Time.deltaTime);
         rigidbody2d.MovePosition(position);
     }
 
     public void ChangeHealth(int amount) {
         if (amount < 0) {
-            if (isInvincible) {
-                return;
-            }
+            if (isInvincible) return;
             isInvincible = true;
             damageCooldown = timeInvincible;
             animator.SetTrigger("Hit");
+            float playerHitVolume = 0.5f;
+            audioSource.PlayOneShot(playerHitClip, playerHitVolume);
         }
-        
+
         currentHealth = Mathf.Clamp(currentHealth + amount, minHealth, maxHealth);
         UIHandler.instance.SetHealthValue(currentHealth / (float)maxHealth);
     }
 
+    private void FindFriend() {
+        var raycastDistance = 2.5f;
+        var hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, moveDirection,
+            raycastDistance,
+            LayerMask.GetMask("NPC"));
+        if (hit.collider != null) {
+            var npc = hit.collider.GetComponent<NonPlayerCharacter>();
+            if (npc != null) {
+                UIHandler.instance.ShowNonPlayerDialogue();
+                Debug.Log("Raycast hit " + hit.collider.name);
+            }
+        }
+    }
+
     private void Launch() {
-        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
-        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        var projectileObject = Instantiate(projectilePrefab,
+            rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+        var projectile = projectileObject.GetComponent<Projectile>();
         projectile.Launch(moveDirection, 300);
         animator.SetTrigger("Launch");
+        audioSource.PlayOneShot(launchClip);
+    }
+
+    public void PlaySound(AudioClip clip) {
+        audioSource.PlayOneShot(clip);
     }
     
 }

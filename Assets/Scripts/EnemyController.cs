@@ -3,7 +3,12 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour {
     
     
+    public static EnemyController Instance { get; private set; }
+    
     Animator animator;
+    private AudioSource audioSource;
+    public AudioClip enemyFixedClip;
+    public ParticleSystem smokeEffect;
     
     private Rigidbody2D rigidbody2d;
     [SerializeField] private float moveSpeed = 3.0f;
@@ -40,8 +45,8 @@ public class EnemyController : MonoBehaviour {
     
     private void Start() {
         animator = GetComponent<Animator>();
-        
         rigidbody2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         
         movingTimer = timeMoving;
         stateTimer = stateDuration;
@@ -105,7 +110,10 @@ public class EnemyController : MonoBehaviour {
         broken = false;
         rigidbody2d.simulated = false;
         animator.enabled = false;
-        spriteRenderer.sprite = frozenSprites[Random.Range(0, frozenSprites.Length)];   
+        spriteRenderer.sprite = frozenSprites[Random.Range(0, frozenSprites.Length)];
+        PlayerController.Instance.PlaySound(enemyFixedClip);
+        audioSource.Stop();
+        smokeEffect.Stop();
     }
     
 }
